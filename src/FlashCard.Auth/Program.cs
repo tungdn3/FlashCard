@@ -1,4 +1,4 @@
-﻿using FlashCard.Auth;
+using FlashCard.Auth;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
