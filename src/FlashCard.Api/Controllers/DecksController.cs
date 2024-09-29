@@ -66,5 +66,25 @@ namespace FlashCard.Api.Controllers
             int cardId = await _mediator.Send(request);
             return cardId;
         }
+
+        [HttpPut("{id}/cards/{cardId}", Name = "UpdateCard")]
+        public async Task UpdateCard(int id, int cardId, [FromBody] UpdateCardRequest request)
+        {
+            request.DeckId = id;
+            request.CardId = cardId;
+            await _mediator.Send(request);
+        }
+
+        [HttpDelete("{id}/cards/{cardId}", Name = "DeleteCard")]
+        public async Task DeleteCard(int id, int cardId)
+        {
+            var request = new DeleteCardRequest
+            {
+                DeckId = id,
+                CardId = cardId,
+            };
+
+            await _mediator.Send(request);
+        }
     }
 }

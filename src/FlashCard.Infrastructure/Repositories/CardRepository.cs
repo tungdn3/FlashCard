@@ -24,6 +24,20 @@ public class CardRepository : ICardRepository
 
     public Task<List<Card>> Get(GetCardsRequest request)
     {
-        return _context.Cards.Where(x => x.DeckId == request.DeckId).ToListAsync();
+        return _context.Cards
+            .Where(x => x.DeckId == request.DeckId && !x.IsDeleted)
+            .ToListAsync();
+    }
+
+    public async Task<Card?> GetById(int cardId)
+    {
+        Card? card = await _context.Cards.FindAsync(cardId);
+        return card;
+    }
+
+    public async Task Update(Card card)
+    {
+        _context.Cards.Update(card);
+        await _context.SaveChangesAsync();
     }
 }

@@ -8,6 +8,8 @@ public class Card
 
     public string Meaning { get; set; } = string.Empty;
 
+    public bool IsDeleted { get; set; }
+
     public int DeckId { get; set; }
 
     public Deck Deck { get; set; }
