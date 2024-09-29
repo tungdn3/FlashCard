@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using IdentityModel;
 
 namespace FlashCard.Auth;
 
@@ -16,6 +17,14 @@ public static class Config
         new ApiScope[]
         {
             new ApiScope(name: "flash-card-api", displayName: "Flash Card API")
+            {
+                UserClaims =
+                {
+                    JwtClaimTypes.Name,
+                    JwtClaimTypes.Subject,
+                    JwtClaimTypes.Role,
+                }
+            }
         };
 
     public static IEnumerable<Client> Clients =>

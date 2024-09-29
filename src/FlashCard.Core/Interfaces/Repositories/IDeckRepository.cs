@@ -8,7 +8,7 @@ public interface IDeckRepository
 {
     Task<int> Create(Deck deck);
     Task<bool> Exist(int deckId);
-    Task<PageResultDto<Deck>> Get(GetDecksRequest request);
+    Task<PageResultDto<Deck>> Get(GetDecksRequest request, string userId);
     Task<Deck?> GetById(int id);
     Task Update(Deck deck);
 }

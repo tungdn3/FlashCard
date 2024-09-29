@@ -28,11 +28,11 @@ internal class DeckRepository : IDeckRepository
         return _context.Decks.AnyAsync(d => d.Id == deckId);
     }
 
-    public async Task<PageResultDto<Deck>> Get(GetDecksRequest request)
+    public async Task<PageResultDto<Deck>> Get(GetDecksRequest request, string userId)
     {
         IQueryable<Deck> query = _context.Decks
             .AsNoTracking()
-            .Where(x => !x.IsDeleted);
+            .Where(x => !x.IsDeleted && x.OwnerId == userId);
 
         if (!string.IsNullOrEmpty(request.SearchText))
         {

@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 /src/FlashCard.Api/FlashCard.db
 /src/FlashCard.Api/FlashCard.db-shm
 /src/FlashCard.Api/FlashCard.db-wal
+/src/FlashCard.Auth/AspIdUsers.db
+/src/FlashCard.Auth/AspIdUsers.db-shm
+/src/FlashCard.Auth/AspIdUsers.db-wal

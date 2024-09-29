@@ -9,7 +9,7 @@ public interface ICardRepository
 
     Task<int> Create(Card card);
 
-    Task<Card?> GetById(int cardId);
+    Task<Card?> GetById(int cardId, int deckId);
     
     Task Update(Card card);
 }

@@ -16,6 +16,7 @@ public static class DependencyInjection
 
         services.AddScoped<IDeckRepository, DeckRepository>();
         services.AddScoped<ICardRepository, CardRepository>();
+        services.AddScoped<IIdentityRepository, IdentityRepository>();
 
         return services;
     }

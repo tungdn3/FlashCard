@@ -1,9 +1,4 @@
 ﻿using FlashCard.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlashCard.Infrastructure.EF;
 
@@ -18,7 +13,10 @@ public static class DbInitializer
 
         var decks = new Deck[]
         {
-            new Deck { Name = "Deck 1" },
+            new Deck { 
+                Name = "Deck 1" ,
+                OwnerId = "4af8b4a5-1e2a-439a-9b92-e3bf116d65a3", // alice/Pass123$
+            },
         };
 
         context.Decks.AddRange(decks);

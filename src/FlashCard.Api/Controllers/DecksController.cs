@@ -2,10 +2,12 @@ using FlashCard.Core.Dtos;
 using FlashCard.Core.Features.Cards;
 using FlashCard.Core.Features.Decks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlashCard.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1/decks")]
     public class DecksController : ControllerBase

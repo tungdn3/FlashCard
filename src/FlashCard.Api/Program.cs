@@ -3,7 +3,10 @@ using FlashCard.Infrastructure;
 using FlashCard.Infrastructure.EF;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +60,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services
     .AddAuthentication()
     .AddJwtBearer(options =>
@@ -76,6 +80,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddCoreLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

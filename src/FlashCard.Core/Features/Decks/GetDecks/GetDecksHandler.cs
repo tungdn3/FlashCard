@@ -8,15 +8,19 @@ namespace FlashCard.Core.Features.Decks;
 public class GetDecksHandler : IRequestHandler<GetDecksRequest, PageResultDto<GetDecksResponseItem>>
 {
     private readonly IDeckRepository _deckRepository;
+    private readonly IIdentityRepository _identityRepository;
 
-    public GetDecksHandler(IDeckRepository deckRepository)
+    public GetDecksHandler(IDeckRepository deckRepository, IIdentityRepository identityRepository)
     {
         _deckRepository = deckRepository;
+        _identityRepository = identityRepository;
     }
 
     public async Task<PageResultDto<GetDecksResponseItem>> Handle(GetDecksRequest request, CancellationToken cancellationToken)
     {
-        PageResultDto<Deck> entityResults = await _deckRepository.Get(request);
+        string userId = _identityRepository.GetCurrentUserId();
+
+        PageResultDto<Deck> entityResults = await _deckRepository.Get(request, userId);
 
         var result = new PageResultDto<GetDecksResponseItem>
         {

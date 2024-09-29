@@ -29,9 +29,9 @@ public class CardRepository : ICardRepository
             .ToListAsync();
     }
 
-    public async Task<Card?> GetById(int cardId)
+    public async Task<Card?> GetById(int cardId, int deckId)
     {
-        Card? card = await _context.Cards.FindAsync(cardId);
+        Card? card = await _context.Cards.Where(x => x.Id == cardId && x.DeckId == deckId).FirstOrDefaultAsync();
         return card;
     }
 
