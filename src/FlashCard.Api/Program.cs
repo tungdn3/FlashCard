@@ -1,6 +1,8 @@
 using FlashCard.Core;
 using FlashCard.Infrastructure;
 using FlashCard.Infrastructure.EF;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +20,60 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Flash Card API",
         Description = "An ASP.NET Core Web API for managing flash cards",
     });
+
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            Implicit = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri($"{builder.Configuration["Auth:Authority"]}/connect/authorize"),
+                TokenUrl = new Uri($"{builder.Configuration["Auth:Authority"]}/connect/token"),
+                Scopes = new Dictionary<string, string>
+                {
+                    { "flash-card-api", "Flash Card API - full access" }
+                }
+            }
+        },
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "oauth2",
+                },
+            },
+            Array.Empty<string>()
+        }
+    });
 });
+
+builder.Services
+    .AddAuthentication()
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Auth:Authority"];
+        options.TokenValidationParameters.ValidateAudience = false;
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "flash-card-api");
+    });
+});
+
 builder.Services.AddCoreLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 
@@ -28,7 +83,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.OAuthClientId(app.Configuration["Auth:SwaggerClientId"]);
+    });
+
     app.UseExceptionHandler("/error-development");
 }
 else
