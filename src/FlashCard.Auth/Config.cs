@@ -47,22 +47,23 @@ public static class Config
             },
             new Client
             {
-                ClientId = "web",
+                ClientId = "flash-card-spa",
                 ClientSecrets = { new Secret("secret".Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
             
                 // where to redirect to after login
-                RedirectUris = { "https://localhost:5002/signin-oidc" },
+                RedirectUris = { "https://localhost:7292/signin-oidc" },
 
                 // where to redirect to after logout
-                PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
+                PostLogoutRedirectUris = { "https://localhost:7292/signout-callback-oidc" },
 
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "flash-card-api"
+                    IdentityServerConstants.StandardScopes.OfflineAccess,
+                    "flash-card-api",
                 }
             }
         };

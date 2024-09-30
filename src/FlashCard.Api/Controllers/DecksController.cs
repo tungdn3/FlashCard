@@ -9,7 +9,7 @@ namespace FlashCard.Api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/v1/decks")]
+    [Route("v1/decks")]
     public class DecksController : ControllerBase
     {
         private readonly IMediator _mediator;
