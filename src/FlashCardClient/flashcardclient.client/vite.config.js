@@ -50,7 +50,12 @@ export default defineConfig({
                 target: 'https://localhost:7292/',
                 secure: false
             },
-            '^/auth': {
+            '^/auth/': {
+                target: 'https://localhost:7292/',
+                secure: false,
+                changeOrigin: true
+            },
+            '^/v1/': {
                 target: 'https://localhost:7292/',
                 secure: false,
                 changeOrigin: true
