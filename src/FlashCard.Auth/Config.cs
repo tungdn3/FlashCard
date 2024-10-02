@@ -47,13 +47,16 @@ public static class Config
             },
             new Client
             {
-                ClientId = "flash-card-spa",
+                ClientId = "flash-card-bff",
                 ClientSecrets = { new Secret("secret".Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
             
                 // where to redirect to after login
-                RedirectUris = { "https://localhost:7292/signin-oidc" },
+                RedirectUris = 
+                { 
+                    "https://localhost:7292/signin-oidc", // bff
+                },
 
                 // where to redirect to after logout
                 PostLogoutRedirectUris = { "https://localhost:7292/signout-callback-oidc" },

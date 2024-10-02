@@ -63,7 +63,7 @@ void ConfigureOpenIdConnect(OpenIdConnectOptions options)
     options.Scope.Clear();
     options.Scope.Add("openid");
     options.Scope.Add("profile");
-    options.Scope.Add("offline_access");
+    //options.Scope.Add("offline_access");
     options.Scope.Add("flash-card-api");
     options.GetClaimsFromUserInfoEndpoint = true;
 

@@ -10,7 +10,7 @@ public class AuthController : Controller
     public ActionResult Login(string returnUrl = "/")
     {
         return new ChallengeResult(
-            "oidc", 
+            "oidc",
             new AuthenticationProperties()
             {
                 RedirectUri = returnUrl
@@ -23,24 +23,26 @@ public class AuthController : Controller
         await HttpContext.SignOutAsync();
 
         return new SignOutResult(
-            "oidc", 
+            "oidc",
             new AuthenticationProperties
             {
                 RedirectUri = Url.Action("Index", "Home")
             });
     }
 
-    public ActionResult GetUser()
+    public ActionResult<UserDto> GetUser()
     {
-        if (User.Identity.IsAuthenticated)
+        if (User.Identity != null && User.Identity.IsAuthenticated)
         {
-            var claims = ((ClaimsIdentity)this.User.Identity).Claims.Select(c =>
-                            new { type = c.Type, value = c.Value })
-                            .ToArray();
+            Dictionary<string, string> claimsMap = ((ClaimsIdentity)User.Identity).Claims.ToDictionary(x => x.Type, x => x.Value);
 
-            return Json(new { isAuthenticated = true, claims = claims });
+            return Json(new UserDto
+            {
+                Id = claimsMap[ClaimTypes.NameIdentifier],
+                Name = claimsMap["name"],
+            });
         }
 
-        return Json(new { isAuthenticated = false });
+        return Json(null);
     }
 }
