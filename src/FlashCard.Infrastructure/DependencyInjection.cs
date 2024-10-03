@@ -1,4 +1,6 @@
-﻿using FlashCard.Core.Interfaces.Repositories;
+﻿using FlashCard.Core.Interfaces;
+using FlashCard.Core.Interfaces.Repositories;
+using FlashCard.Infrastructure.AIClients;
 using FlashCard.Infrastructure.EF;
 using FlashCard.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,9 @@ public static class DependencyInjection
         services.AddScoped<IDeckRepository, DeckRepository>();
         services.AddScoped<ICardRepository, CardRepository>();
         services.AddScoped<IIdentityRepository, IdentityRepository>();
+
+        services.Configure<AzureChatCompleteOptions>(configuration.GetSection(AzureChatCompleteOptions.AzureChatComplete));
+        services.AddSingleton<IGenerativeAIClient, AzureChatCompleteClient>();
 
         return services;
     }

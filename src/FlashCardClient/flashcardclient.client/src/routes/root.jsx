@@ -4,6 +4,7 @@ import {
   useLoaderData,
   NavLink,
   json,
+  redirect,
 } from "react-router-dom";
 import { useState } from "react";
 import Header from "../components/Header";
@@ -38,8 +39,9 @@ export async function action({ request }) {
   const intent = formData.get("intent");
   if (intent === "create") {
     const deckName = formData.get("name");
-    await axios.post(`/v1/decks`, { name: deckName });
-    return { ok: true };
+    const response = await axios.post(`/v1/decks`, { name: deckName });
+    const id = response.data;
+    return redirect(`/decks/${id}`);
   }
 
   if (intent === "delete") {
@@ -121,7 +123,7 @@ export default function Root() {
                               type="submit"
                               size="sm"
                               name="intent"
-                              defaultValue="delete"
+                              value="delete"
                               variant="outline-danger"
                             >
                               <i className="bi bi-trash-fill"></i>
@@ -161,7 +163,7 @@ export default function Root() {
                 variant="primary"
                 type="submit"
                 name="intent"
-                defaultValue="create"
+                value="create"
                 className="ms-auto"
                 onClick={() => setShowCreateDeckModal(false)}
               >

@@ -4,14 +4,15 @@ import {
   useLoaderData,
   useRevalidator,
 } from "react-router-dom";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import FlashCard from "../components/FlashCard";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
-import { useState } from "react";
+import FlashCard from "../components/FlashCard";
 import Learn from "../components/Learn";
 
 export async function loader({ params }) {
@@ -39,7 +40,7 @@ export async function action({ request, params }) {
     return { ok: true };
   }
 
-  throw json({ message: "Invalid intent" }, { status: 400 });
+  throw json({ message: `Invalid intent '${intent}'` }, { status: 400 });
 }
 
 export default function Deck() {
@@ -49,6 +50,9 @@ export default function Deck() {
   const [showForm, setShowForm] = useState(false);
   const [showLearn, setShowLearn] = useState(false);
   const [cardToEdit, setCardToEdit] = useState(null);
+  const [word, setWord] = useState("");
+  const [example, setExample] = useState("");
+  const [isExampleGenerating, setIsExampleGenerating] = useState(false);
 
   function handleFormSubmit() {
     setShowForm(false);
@@ -61,6 +65,7 @@ export default function Deck() {
   function handleCloseForm() {
     setCardToEdit(null);
     setShowForm(false);
+    setExample("");
   }
 
   function handleEditCard(cardId) {
@@ -70,6 +75,8 @@ export default function Deck() {
       return;
     }
     setCardToEdit(card);
+    setWord(card.word);
+    setExample(card.example);
     setShowForm(true);
   }
 
@@ -78,16 +85,40 @@ export default function Deck() {
     revalidator.revalidate();
   }
 
+  async function handleGenerateExample() {
+    setIsExampleGenerating(true);
+    try {
+      const response = await axios.post(`/v1/sentence-suggestions`, {
+        word: word,
+      });
+      if (response.status === 200) {
+        const example = response.data.join(". ");
+        setExample(example);
+        if (cardToEdit) {
+          console.log("--------- set card to ediit example", example);
+          setCardToEdit({ ...cardToEdit, example: example });
+        }
+      } else {
+        // display toast
+      }
+    } finally {
+      setIsExampleGenerating(false);
+    }
+  }
+
   return (
     <div className="mt-3">
       <div className="d-flex justify-content-end align-items-center">
-        <Button
-          variant="outline-primary"
-          onClick={() => setShowForm(true)}
-        >
+        <Button variant="secondary" onClick={() => setShowForm(true)}>
           New Card
         </Button>
-        <Button className="ms-3" disabled={!cards || !cards.length} onClick={() => setShowLearn(true)}>Learn</Button>
+        <Button
+          className="ms-3"
+          disabled={!cards || !cards.length}
+          onClick={() => setShowLearn(true)}
+        >
+          Learn
+        </Button>
       </div>
 
       {cards && cards.length ? (
@@ -105,7 +136,7 @@ export default function Deck() {
                 id={card.id}
                 word={card.word}
                 meaning={card.meaning}
-                sentenses={["I like apple"]}
+                example={card.example}
                 onEdit={handleEditCard}
                 onDelete={handleDeleteCard}
               />
@@ -120,7 +151,7 @@ export default function Deck() {
         </div>
       )}
 
-      <Modal show={showForm} onHide={handleCloseForm}>
+      <Modal centered show={showForm} onHide={handleCloseForm}>
         <Modal.Header closeButton>
           <Modal.Title>{cardToEdit ? "Edit Card" : "Create Card"}</Modal.Title>
         </Modal.Header>
@@ -129,11 +160,13 @@ export default function Deck() {
             <Form.Group className="mb-3">
               <Form.Control
                 name="word"
-                defaultValue={cardToEdit?.word}
+                value={word}
+                onChange={(e) => setWord(e.target.value)}
                 placeholder="Word"
                 autoFocus
               />
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Control
                 name="meaning"
@@ -143,15 +176,48 @@ export default function Deck() {
                 placeholder="Meaning"
               />
             </Form.Group>
+
+            <Form.Group as={Row} className="mb-3">
+              <div className="d-flex">
+                <Form.Control
+                  name="example"
+                  value={example}
+                  onChange={(e) => setExample(e.target.value)}
+                  as="textarea"
+                  rows={2}
+                  placeholder="Example"
+                  className="flex-grow-1 me-2"
+                  disabled={isExampleGenerating || !word}
+                />
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled={isExampleGenerating || !word}
+                  onClick={handleGenerateExample}
+                >
+                  {isExampleGenerating && (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
+                  AI Generate
+                </Button>
+              </div>
+            </Form.Group>
+
             <Form.Control
               hidden
               name="id"
               defaultValue={cardToEdit ? cardToEdit.id : ""}
             />
+
             <div className="d-flex">
               <Button
                 name="intent"
-                defaultValue={cardToEdit ? "edit" : "create"}
+                value={cardToEdit ? "edit" : "create"}
                 variant="primary"
                 type="submit"
                 className="ms-auto"
@@ -169,7 +235,11 @@ export default function Deck() {
           <Modal.Title>Learn</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Learn cards={cards} />
+          <Learn
+            cards={cards}
+            onEdit={handleEditCard}
+            onDelete={handleDeleteCard}
+          />
         </Modal.Body>
       </Modal>
     </div>

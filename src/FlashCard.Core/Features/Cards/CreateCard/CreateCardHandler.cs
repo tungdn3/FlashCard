@@ -44,6 +44,7 @@ public class CreateCardHandler : IRequestHandler<CreateCardRequest, int>
             DeckId = request.DeckId,
             Word = request.Word,
             Meaning = request.Meaning,
+            Example = request.Example,
         };
 
         int id = await _cardRepository.Create(card);

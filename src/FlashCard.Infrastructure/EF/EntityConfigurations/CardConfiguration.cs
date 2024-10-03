@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using FlashCard.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using FlashCard.Core.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FlashCard.Infrastructure.EF.EntityConfigurations;
 
@@ -16,6 +16,10 @@ internal class CardConfiguration : IEntityTypeConfiguration<Card>
             .HasMaxLength(100);
 
         builder.Property(x => x.Meaning)
+            .IsRequired()
+            .HasMaxLength(500);
+
+        builder.Property(x => x.Example)
             .HasMaxLength(500);
     }
 }

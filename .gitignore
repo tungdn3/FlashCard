@@ -488,3 +488,4 @@ $RECYCLE.BIN/
 /src/FlashCard.Auth/AspIdUsers.db
 /src/FlashCard.Auth/AspIdUsers.db-shm
 /src/FlashCard.Auth/AspIdUsers.db-wal
+/src/FlashCard.Api/appsettings.Development.json

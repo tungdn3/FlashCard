@@ -41,6 +41,7 @@ public class GetCardsHandler : IRequestHandler<GetCardsRequest, IEnumerable<GetC
                 Id = x.Id,
                 Meaning = x.Meaning,
                 Word = x.Word,
+                Example = x.Example,
             })
             .ToList();
 

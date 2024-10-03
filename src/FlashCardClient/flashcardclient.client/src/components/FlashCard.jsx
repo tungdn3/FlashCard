@@ -1,13 +1,12 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import MyTooltip from "./MyTooltip";
 
 export default function FlashCard({
   id,
   word,
   meaning,
-  sentenses,
+  example,
   onEdit,
   onDelete,
 }) {
@@ -47,7 +46,7 @@ export default function FlashCard({
 
             <Card.Body className="d-flex flex-column justify-content-between align-items-center">
               <Card.Title>{word}</Card.Title>
-              <Card.Text>{sentenses}</Card.Text>
+              <Card.Text>{example}</Card.Text>
             </Card.Body>
 
             <Card.Footer>
