@@ -3,6 +3,7 @@ import {
   Outlet,
   useLoaderData,
   NavLink,
+  json,
 } from "react-router-dom";
 import { useState } from "react";
 import Header from "../components/Header";
@@ -34,10 +35,20 @@ export async function loader({ request }) {
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const deckName = formData.get("name");
-  await axios.post(`/v1/decks`, { name: deckName });
-  // todo: handle error
-  return null;
+  const intent = formData.get("intent");
+  if (intent === "create") {
+    const deckName = formData.get("name");
+    await axios.post(`/v1/decks`, { name: deckName });
+    return { ok: true };
+  }
+
+  if (intent === "delete") {
+    const deckId = formData.get("id");
+    await axios.delete(`/v1/decks/${deckId}`);
+    return { ok: true };
+  }
+
+  throw json({ message: "Invalid intent" }, { status: 400 });
 }
 
 export default function Root() {
@@ -83,15 +94,40 @@ export default function Root() {
                 {decks.length ? (
                   <ListGroup defaultActiveKey="3">
                     {decks.map((deck) => (
-                      <NavLink
+                      <div
                         key={deck.id}
-                        to={`decks/${deck.id}`}
-                        className={({ isActive, isPending }) =>
-                          isActive ? "bg-primary text-light p-2" : isPending ? "bg-secondary text-light p-2" : "p-2"
-                        }
+                        className="d-flex justify-content-between align-items-center"
                       >
+                        <NavLink
+                          key={deck.id}
+                          to={`decks/${deck.id}`}
+                          className={({ isActive, isPending }) =>
+                            isActive
+                              ? "bg-primary text-light p-2"
+                              : isPending
+                              ? "bg-secondary text-light p-2"
+                              : "p-2"
+                          }
+                        >
                           {deck.name}
-                      </NavLink>
+                        </NavLink>
+                        <RForm method="post">
+                          <Form.Control
+                            hidden
+                            name="id"
+                            defaultValue={deck.id}
+                          />
+                            <Button
+                              type="submit"
+                              size="sm"
+                              name="intent"
+                              defaultValue="delete"
+                              variant="outline-danger"
+                            >
+                              <i className="bi bi-trash-fill"></i>
+                            </Button>
+                        </RForm>
+                      </div>
                     ))}
                   </ListGroup>
                 ) : (
@@ -121,14 +157,16 @@ export default function Root() {
               <Form.Control name="name" placeholder="Deck name" autoFocus />
             </Form.Group>
             <div className="d-flex">
-            <Button
-              variant="primary"
-              type="submit"
-              className="ms-auto"
-              onClick={() => setShowCreateDeckModal(false)}
-            >
-              Create
-            </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                name="intent"
+                defaultValue="create"
+                className="ms-auto"
+                onClick={() => setShowCreateDeckModal(false)}
+              >
+                Create
+              </Button>
             </div>
           </RForm>
         </Modal.Body>

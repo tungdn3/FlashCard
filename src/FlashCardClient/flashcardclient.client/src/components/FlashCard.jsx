@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import MyTooltip from "./MyTooltip";
 
 export default function FlashCard({
   id,
@@ -21,6 +22,7 @@ export default function FlashCard({
             style={{ minHeight: 300, minWidth: 220 }}
           >
             <Card.Header>
+              {/* <MyTooltip id="edit" content="Edit"> */}
               <Button
                 size="sm"
                 variant="outline-light"
@@ -29,6 +31,9 @@ export default function FlashCard({
               >
                 <i className="bi bi-pencil-square"></i>
               </Button>
+              {/* </MyTooltip> */}
+
+              {/* <MyTooltip id="delete" content="Delete"> */}
               <Button
                 size="sm"
                 variant="outline-danger"
@@ -37,6 +42,7 @@ export default function FlashCard({
               >
                 <i className="bi bi-trash-fill"></i>
               </Button>
+              {/* </MyTooltip> */}
             </Card.Header>
 
             <Card.Body className="d-flex flex-column justify-content-between align-items-center">
@@ -58,14 +64,18 @@ export default function FlashCard({
             style={{ minHeight: 300, minWidth: 220 }}
           >
             <Card.Header>
+              {/* <MyTooltip id="edit" content="Edit"> */}
               <Button
                 size="sm"
-                variant="outline-light"
+                variant="outline-secondary"
                 className="mx-1"
                 onClick={() => onEdit(id)}
               >
                 <i className="bi bi-pencil-square"></i>
               </Button>
+              {/* </MyTooltip> */}
+
+              {/* <MyTooltip id="delete" content="Delete"> */}
               <Button
                 size="sm"
                 variant="outline-danger"
@@ -74,6 +84,7 @@ export default function FlashCard({
               >
                 <i className="bi bi-trash-fill"></i>
               </Button>
+              {/* </MyTooltip> */}
             </Card.Header>
 
             <Card.Body className="d-flex flex-column justify-content-center">

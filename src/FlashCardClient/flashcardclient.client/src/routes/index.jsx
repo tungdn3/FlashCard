@@ -1,7 +1,8 @@
 export default function Index() {
   return (
-    <p>
-      Create or select a deck on the left panel.
-    </p>
+    <div className="mt-5 text-center">
+      <h4 className="text-secondary">No deck selected</h4>
+      <div className="mt-3">Create or select one from the left panel.</div>
+    </div>
   );
 }
