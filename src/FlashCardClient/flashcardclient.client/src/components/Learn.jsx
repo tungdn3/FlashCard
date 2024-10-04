@@ -13,6 +13,7 @@ export default function Learn({ cards, onEdit, onDelete }) {
     <Carousel
       className="bg-secondary bg-opacity-75 w-100 h-100"
       interval={null}
+      keyboard={true}
     >
       {cards.map((card) => (
         <Carousel.Item key={card.id} className="">

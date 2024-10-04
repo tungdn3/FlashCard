@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
 
-AuthProvider.propTypes = {
-  children: PropTypes.element,
-};
-
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
@@ -52,4 +48,8 @@ export default AuthProvider;
 
 export const useAuth = () => {
   return useContext(AuthContext);
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.element,
 };

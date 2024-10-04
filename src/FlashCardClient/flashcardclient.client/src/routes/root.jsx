@@ -2,7 +2,6 @@ import {
   Form as RForm,
   Outlet,
   useLoaderData,
-  NavLink,
   json,
   redirect,
   useSubmit,
@@ -18,6 +17,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import DeckItem from "../components/DeckItem";
 
 export async function loader({ request }) {
   const pageSize = 1000; // todo: handle paging properly
@@ -118,40 +118,7 @@ export default function Root() {
                 {decks.length ? (
                   <ListGroup defaultActiveKey="3">
                     {decks.map((deck) => (
-                      <div
-                        key={deck.id}
-                        className="d-flex justify-content-between align-items-center"
-                      >
-                        <NavLink
-                          key={deck.id}
-                          to={`decks/${deck.id}`}
-                          className={({ isActive, isPending }) =>
-                            isActive
-                              ? "p-1 ps-2 m-1 flex-grow-1 border rounded text-decoration-none text-light bg-primary"
-                              : isPending
-                              ? "p-1 ps-2 m-1 flex-grow-1 border rounded text-decoration-none text-light bg-secondary"
-                              : "p-1 ps-2 m-1 flex-grow-1 border rounded text-decoration-none text-secondary bg-light"
-                          }
-                        >
-                          {deck.name}
-                        </NavLink>
-                        <RForm method="post">
-                          <Form.Control
-                            hidden
-                            name="id"
-                            defaultValue={deck.id}
-                          />
-                          <Button
-                            type="submit"
-                            size="sm"
-                            name="intent"
-                            value="delete"
-                            variant="outline-danger"
-                          >
-                            <i className="bi bi-trash-fill"></i>
-                          </Button>
-                        </RForm>
-                      </div>
+                      <DeckItem key={deck.id} id={deck.id} name={deck.name} />
                     ))}
                   </ListGroup>
                 ) : (
