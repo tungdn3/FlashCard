@@ -4,7 +4,7 @@ import {
   useLoaderData,
   useRevalidator,
 } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -54,17 +54,23 @@ export default function Deck() {
   const [example, setExample] = useState("");
   const [isExampleGenerating, setIsExampleGenerating] = useState(false);
 
-  function handleFormSubmit() {
+  useEffect(() => {
+    resetForm();
+  }, [cards]);
+
+  function handleSubmit() {
     setShowForm(false);
-    // the submition is handled by the action function above
-    setTimeout(() => {
-      setCardToEdit(null);
-    }, 0);
+    // the logic of creating or editing is handled by the "action" function
   }
 
   function handleCloseForm() {
-    setCardToEdit(null);
     setShowForm(false);
+    resetForm();
+  }
+
+  function resetForm() {
+    setCardToEdit(null);
+    setWord("");
     setExample("");
   }
 
@@ -156,9 +162,11 @@ export default function Deck() {
           <Modal.Title>{cardToEdit ? "Edit Card" : "Create Card"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <RRDForm method="post">
+          <RRDForm method="post" onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Control
+                required
+                maxLength={100}
                 name="word"
                 value={word}
                 onChange={(e) => setWord(e.target.value)}
@@ -169,6 +177,8 @@ export default function Deck() {
 
             <Form.Group className="mb-3">
               <Form.Control
+                required
+                maxLength={500}
                 name="meaning"
                 defaultValue={cardToEdit?.meaning}
                 as="textarea"
@@ -180,6 +190,7 @@ export default function Deck() {
             <Form.Group as={Row} className="mb-3">
               <div className="d-flex">
                 <Form.Control
+                  maxLength={500}
                   name="example"
                   value={example}
                   onChange={(e) => setExample(e.target.value)}
@@ -190,20 +201,20 @@ export default function Deck() {
                   disabled={isExampleGenerating || !word}
                 />
                 <Button
-                  variant="secondary"
-                  size="sm"
+                  variant="warning"
                   disabled={isExampleGenerating || !word}
                   onClick={handleGenerateExample}
                 >
                   {isExampleGenerating && (
                     <Spinner
+                      size="sm"
                       as="span"
                       animation="border"
                       role="status"
                       aria-hidden="true"
                     />
                   )}
-                  AI Generate
+                  <span className="mx-2">AI Generate</span>
                 </Button>
               </div>
             </Form.Group>
@@ -221,7 +232,6 @@ export default function Deck() {
                 variant="primary"
                 type="submit"
                 className="ms-auto"
-                onClick={handleFormSubmit}
               >
                 Save
               </Button>

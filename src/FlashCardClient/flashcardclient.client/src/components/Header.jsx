@@ -14,17 +14,17 @@ function Header() {
         <Navbar.Brand href="#home">AI-Powered Flash Card</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-          </Nav> */}
           <Nav className="ms-auto">
             {!isAuthenticated && (
-              <Button variant="outline-secondary" onClick={() => login()}>Log in</Button>
+              <Button variant="outline-primary mx-1" onClick={() => login()}>
+                Log In
+              </Button>
             )}
             {isAuthenticated && (
               <NavDropdown title={user.name} id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={() => logout()}>Log out</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => logout()}>
+                  Log out
+                </NavDropdown.Item>
               </NavDropdown>
             )}
           </Nav>
