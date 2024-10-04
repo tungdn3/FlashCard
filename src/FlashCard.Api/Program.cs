@@ -1,3 +1,4 @@
+using FlashCard.Api;
 using FlashCard.Core;
 using FlashCard.Infrastructure;
 using FlashCard.Infrastructure.EF;
@@ -8,8 +9,10 @@ using System.IdentityModel.Tokens.Jwt;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -89,13 +92,9 @@ if (app.Environment.IsDevelopment())
     {
         c.OAuthClientId(app.Configuration["Auth:SwaggerClientId"]);
     });
+}
 
-    app.UseExceptionHandler("/error-development");
-}
-else
-{
-    app.UseExceptionHandler("/error");
-}
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

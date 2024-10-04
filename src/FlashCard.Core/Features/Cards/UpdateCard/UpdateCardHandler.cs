@@ -36,7 +36,7 @@ public class UpdateCardHandler : IRequestHandler<UpdateCardRequest>
 
         if (!deck.OwnerId.Equals(userId, StringComparison.OrdinalIgnoreCase))
         {
-            throw new UnauthorizedException("You are not allowed to access this deck.");
+            throw new ForbiddenException("You are not allowed to access this deck.");
         }
 
         Card card = await _cardRepository.GetById(request.CardId, request.DeckId)

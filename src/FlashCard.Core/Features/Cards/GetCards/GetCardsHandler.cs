@@ -30,7 +30,7 @@ public class GetCardsHandler : IRequestHandler<GetCardsRequest, IEnumerable<GetC
 
         if (!deck.OwnerId.Equals(userId, StringComparison.OrdinalIgnoreCase))
         {
-            throw new UnauthorizedException("You are not allowed to access this deck.");
+            throw new ForbiddenException("You are not allowed to access this deck.");
         }
 
         List<Card> entities = await _cardRepository.Get(request);

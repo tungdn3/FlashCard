@@ -36,7 +36,7 @@ public class CreateCardHandler : IRequestHandler<CreateCardRequest, int>
 
         if (!deck.OwnerId.Equals(userId, StringComparison.OrdinalIgnoreCase))
         {
-            throw new UnauthorizedException("You are not allowed to access this deck.");
+            throw new ForbiddenException("You are not allowed to access this deck.");
         }
 
         var card = new Card
