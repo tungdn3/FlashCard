@@ -1,5 +1,12 @@
+import PropTypes from "prop-types";
 import Carousel from "react-bootstrap/Carousel";
 import FlashCard from "./FlashCard";
+
+Learn.propTypes = {
+  cards: PropTypes.array,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
+};
 
 export default function Learn({ cards, onEdit, onDelete }) {
   return (

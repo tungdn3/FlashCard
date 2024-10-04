@@ -84,7 +84,7 @@ export default function Root() {
       <div className="d-flex flex-column container-fluid">
         <Header />
         <Container>
-          <Row style={{minHeight: "92vh"}}>
+          <Row style={{ minHeight: "92vh" }}>
             <Col
               sm={3}
               className="p-3 pt-4 d-flex flex-column bg-body-secondary rounded rounded-top-0"
@@ -127,10 +127,10 @@ export default function Root() {
                           to={`decks/${deck.id}`}
                           className={({ isActive, isPending }) =>
                             isActive
-                              ? "bg-primary text-light p-2"
+                              ? "p-1 ps-2 m-1 flex-grow-1 border rounded text-decoration-none text-light bg-primary"
                               : isPending
-                              ? "bg-secondary text-light p-2"
-                              : "p-2"
+                              ? "p-1 ps-2 m-1 flex-grow-1 border rounded text-decoration-none text-light bg-secondary"
+                              : "p-1 ps-2 m-1 flex-grow-1 border rounded text-decoration-none text-secondary bg-light"
                           }
                         >
                           {deck.name}

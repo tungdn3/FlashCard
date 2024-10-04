@@ -1,6 +1,16 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+
+FlashCard.propTypes = {
+  id: PropTypes.number,
+  word: PropTypes.string,
+  meaning: PropTypes.string,
+  example: PropTypes.string,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
+};
 
 export default function FlashCard({
   id,
