@@ -1,7 +1,6 @@
-﻿using FlashCard.Core.Features.SentenceSuggestions;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace FlashCard.Core.Features.Cards;
+namespace FlashCard.Core.Features.SentenceSuggestions;
 
 public class GenerateSentenceValidator : AbstractValidator<GenerateSentenceRequest>
 {

@@ -1,9 +1,8 @@
-﻿using FlashCard.Core.Features.SentenceSuggestions;
-using FlashCard.Core.Interfaces;
+﻿using FlashCard.Core.Interfaces.AIClients;
 using FluentValidation;
 using MediatR;
 
-namespace FlashCard.Core.Features.Cards.CreateCard;
+namespace FlashCard.Core.Features.SentenceSuggestions;
 
 public class GenerateSentenceHandler : IRequestHandler<GenerateSentenceRequest, IEnumerable<string>>
 {
