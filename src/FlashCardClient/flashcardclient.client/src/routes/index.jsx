@@ -12,7 +12,7 @@ export default function Index() {
   ) : (
     <div className="mt-5 text-center">
       <h4 className="text-primary">Welcome to AI-Powered Flash Card</h4>
-      <h5 className="text-secondary">English learning flash card system</h5>
+      <h5 className="text-secondary mt-3">English learning flash card system</h5>
       <div className="mt-5">
         Click the button bellow to log in or register an account
       </div>

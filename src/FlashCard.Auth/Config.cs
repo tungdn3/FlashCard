@@ -37,7 +37,11 @@ public static class Config
                 RequireClientSecret = false,
                 RequirePkce = false,
                 AllowAccessTokensViaBrowser = true,
-                RedirectUris = { "https://localhost:7002/swagger/oauth2-redirect.html" },
+                RedirectUris = 
+                { 
+                    "https://localhost:7002/swagger/oauth2-redirect.html",
+                    "https://tdev-flash-card-api.azurewebsites.net//swagger/oauth2-redirect.html",
+                },
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
@@ -56,10 +60,15 @@ public static class Config
                 RedirectUris = 
                 { 
                     "https://localhost:7292/signin-oidc", // bff
+                    "https://tdevflashcard.azurewebsites.net/signin-oidc",
                 },
 
                 // where to redirect to after logout
-                PostLogoutRedirectUris = { "https://localhost:7292/signout-callback-oidc" },
+                PostLogoutRedirectUris =
+                {
+                    "https://localhost:7292/signout-callback-oidc",
+                    "https://tdevflashcard.azurewebsites.net/signout-callback-oidc"
+                },
 
                 AllowedScopes =
                 {

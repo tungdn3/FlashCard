@@ -18,6 +18,12 @@ export async function loader({ params }) {
   // todo: handle cookie expired properly
   if (response.status === 401) {
     window.location.href = "/auth/login";
+  } else if (response.status === 500) {
+    const error = await response.json();
+    throw new Response("", {
+      status: response.status,
+      statusText: error.message,
+    });
   }
   const cards = await response.json();
   return { cards, deckId: params.deckId };
