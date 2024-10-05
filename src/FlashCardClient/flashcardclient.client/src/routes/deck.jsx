@@ -1,6 +1,7 @@
 import {
   json,
   useLoaderData,
+  useNavigation,
   useRevalidator,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import FlashCard from "../components/FlashCard";
 import Learn from "../components/Learn";
@@ -49,7 +51,9 @@ export async function action({ request, params }) {
 
 export default function Deck() {
   const { cards, deckId } = useLoaderData();
-  let revalidator = useRevalidator();
+  const revalidator = useRevalidator();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
 
   const [showForm, setShowForm] = useState(false);
   const [showLearn, setShowLearn] = useState(false);
@@ -98,7 +102,26 @@ export default function Deck() {
         </Button>
       </div>
 
-      {cards && cards.length ? (
+      {isLoading && (
+        <div className="d-flex justify-content-center mt-5">
+          <Spinner
+            as="span"
+            animation="border"
+            role="status"
+            aria-hidden="true"
+          />
+        </div>
+      )}
+
+      {!isLoading && !!cards && cards.length === 0 && (
+        <div className="mt-5 text-center">
+          <div className="text-secondary">
+            Click the &quot;New Card&quot; button to add a card
+          </div>
+        </div>
+      )}
+
+      {!isLoading && !!cards && cards.length > 0 && (
         <Row
           xs={1}
           md={2}
@@ -120,12 +143,6 @@ export default function Deck() {
             </Col>
           ))}
         </Row>
-      ) : (
-        <div className="mt-5 text-center">
-          <div className="text-secondary">
-            Click the &quot;New Card&quot; button to add a card
-          </div>
-        </div>
       )}
 
       <Modal centered show={showForm} onHide={handleCloseForm}>

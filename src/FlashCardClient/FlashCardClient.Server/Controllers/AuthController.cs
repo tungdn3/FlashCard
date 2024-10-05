@@ -26,7 +26,7 @@ public class AuthController : Controller
             "oidc",
             new AuthenticationProperties
             {
-                RedirectUri = Url.Action("Index", "Home")
+                RedirectUri = "/"
             });
     }
 

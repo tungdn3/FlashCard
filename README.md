@@ -24,13 +24,15 @@ Deployed application:
 ## Technologies
 
 - Auth
-  - Duende (IdentityServer) a famous OpenID Connect and OAuth 2.0 framework
+  - Duende (IdentityServer) a famous OpenID Connect and OAuth 2.0 framework. Allows us to manage users ourselve
   - Asp Net Core Identity: provided by Microsoft, to ease the user management, supported by Duende
-  - Sqlite: quick and easy development. Must be replaced by MSSQL Server or Postgres when deploying to Staging or higher environments
+  - Sqlite: to have a quick development. Must be replaced by MSSQL Server or Postgres when deploying to Staging or higher environments
 - Client app
   - React
+  - React bootstrap: I want to have friendly UI and easy to develope the app. It turns out this is not a good choice. The Tooltip makes my UI shake. No built-in hooks for the Toast
+  - React router dom V6: just want to try the taste of "loader" and "action"
 - BFF
-  - .Net 8: a cross-platform framework developed by Microsoft, having advantages of the .Net ecosystem
+  - .Net 8: open source, cross-platform
   - YARP: to forward requests from the SPA to the API without writing code
 - API
   - EF Core: to manipulate data
@@ -83,3 +85,17 @@ dotnet run
 ### Open the app in browser
 
 https://localhost:5173/
+
+
+## Known issues and limitations
+- UI responsiveness. Currently, it is not mobile friendly
+- No paging
+- Handle session timeout more properly. Currently, it auto redirects user to the login page
+- The current prompt is not optimized. If the user has a typo, it may fail to generate examples
+
+## Ideas for future improvements
+- A better UI design
+- Search decks
+- Paging + sorting
+- Allow user to revert word and meaning for all cards in a deck
+- Mark learned cards, remove from learning

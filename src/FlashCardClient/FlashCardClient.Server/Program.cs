@@ -87,34 +87,4 @@ void ConfigureOpenIdConnect(OpenIdConnectOptions options)
 
     // This saves the tokens in the session cookie
     options.SaveTokens = true;
-
-    options.Events = new OpenIdConnectEvents
-    {
-        //// handle the logout redirection
-        //OnRedirectToIdentityProviderForSignOut = (context) =>
-        //{
-        //    var logoutUri = $"{app.Configuration["Auth:Authority"]}/Account/logout?client_id={app.Configuration["Auth:ClientId"]}";
-
-        //    var postLogoutUri = context.Properties.RedirectUri;
-        //    if (!string.IsNullOrEmpty(postLogoutUri))
-        //    {
-        //        if (postLogoutUri.StartsWith("/"))
-        //        {
-        //            // transform to absolute
-        //            var request = context.Request;
-        //            postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
-        //        }
-        //        logoutUri += $"&returnTo={Uri.EscapeDataString(postLogoutUri)}";
-        //    }
-        //    context.Response.Redirect(logoutUri);
-        //    context.HandleResponse();
-
-        //    return Task.CompletedTask;
-        //},
-        //OnRedirectToIdentityProvider = context =>
-        //{
-        //    context.ProtocolMessage.SetParameter("audience", builder.Configuration["Auth:ApiAudience"]);
-        //    return Task.CompletedTask;
-        //}
-    };
 }
