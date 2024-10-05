@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import { Form as RRDForm } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import axios from "axios";
+import Image from "react-bootstrap/Image";
 
 CardForm.propTypes = {
   cardToEdit: PropTypes.object,
@@ -18,6 +19,10 @@ export default function CardForm({ cardToEdit }) {
   const [meaning, setMeaning] = useState(cardToEdit?.meaning || "");
   const [example, setExample] = useState(cardToEdit?.example || "");
   const [isExampleGenerating, setIsExampleGenerating] = useState(false);
+  const [imageUrl, setImageUrl] = useState(
+    cardToEdit?.imageUrl || "/image-placeholder.png"
+  );
+  const [isImageGenerating, setIsImageGenerating] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
   async function handleGenerateExample() {
@@ -32,6 +37,20 @@ export default function CardForm({ cardToEdit }) {
       setShowToast(true);
     } finally {
       setIsExampleGenerating(false);
+    }
+  }
+
+  async function handleGenerateImage() {
+    setIsImageGenerating(true);
+    try {
+      const response = await axios.post(`/v1/image-generations`, {
+        word: word,
+      });
+      setImageUrl(response.data);
+    } catch {
+      setShowToast(true);
+    } finally {
+      setIsImageGenerating(false);
     }
   }
 
@@ -95,13 +114,34 @@ export default function CardForm({ cardToEdit }) {
           </div>
         </Form.Group>
 
+        <div className="d-flex flex-column" style={{ width: 200, heigh: 200 }}>
+          <Form.Control name="imageUrl" value={imageUrl} readOnly hidden />
+          <Image src={imageUrl} />
+          <Button
+            variant="warning"
+            disabled={isImageGenerating || !word}
+            onClick={handleGenerateImage}
+          >
+            {isImageGenerating && (
+              <Spinner
+                size="sm"
+                as="span"
+                animation="border"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+            <span className="mx-2">AI Generate Image</span>
+          </Button>
+        </div>
+
         <Form.Control
           hidden
           name="id"
           defaultValue={cardToEdit ? cardToEdit.id : ""}
         />
 
-        <div className="d-flex">
+        <div className="d-flex mt-3">
           <Button
             name="intent"
             value={cardToEdit ? "edit" : "create"}
@@ -116,7 +156,7 @@ export default function CardForm({ cardToEdit }) {
 
       <ToastContainer
         className="p-3"
-        position="middle-center"
+        position="bottom-center"
         style={{ zIndex: 1 }}
       >
         <Toast
@@ -131,7 +171,7 @@ export default function CardForm({ cardToEdit }) {
             <strong className="me-auto">AI Generate</strong>
           </Toast.Header>
           <Toast.Body>
-            <div>Example generating failed</div>
+            <div>Generatioin failed</div>
             <div>Please check the word or try again later</div>
           </Toast.Body>
         </Toast>

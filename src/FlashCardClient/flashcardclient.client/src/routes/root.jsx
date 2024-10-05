@@ -136,6 +136,7 @@ export default function Root() {
       </div>
 
       <Modal
+        centered
         show={showCreateDeckModal}
         onHide={() => setShowCreateDeckModal(false)}
       >

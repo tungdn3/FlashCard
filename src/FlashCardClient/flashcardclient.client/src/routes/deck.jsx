@@ -124,19 +124,16 @@ export default function Deck() {
       {!isLoading && !!cards && cards.length > 0 && (
         <Row
           xs={1}
-          md={2}
-          lg={3}
-          xxl={4}
+          md={1}
+          lg={2}
+          xxl={3}
           className="g-4"
-          style={{ marginTop: "10rem", marginLeft: "1rem" }}
+          style={{ marginTop: "15rem", marginLeft: "1rem" }}
         >
           {cards.map((card) => (
-            <Col key={card.id} style={{ minHeight: 300 }}>
+            <Col key={card.id} style={{ minHeight: 500 }}>
               <FlashCard
-                id={card.id}
-                word={card.word}
-                meaning={card.meaning}
-                example={card.example}
+                card={card}
                 onEdit={handleEditCard}
                 onDelete={handleDeleteCard}
               />

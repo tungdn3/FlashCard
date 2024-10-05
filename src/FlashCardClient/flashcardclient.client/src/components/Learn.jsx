@@ -19,16 +19,9 @@ export default function Learn({ cards, onEdit, onDelete }) {
         <Carousel.Item key={card.id} className="">
           <div
             className="d-flex w-100 justify-content-center"
-            style={{ marginTop: "10rem", height: 500 }}
+            style={{ height: 800 }}
           >
-            <FlashCard
-              id={card.id}
-              word={card.word}
-              meaning={card.meaning}
-              example={card.example}
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
+            <FlashCard card={card} onEdit={onEdit} onDelete={onDelete} />
           </div>
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>

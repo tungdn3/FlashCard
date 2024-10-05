@@ -4,22 +4,12 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 FlashCard.propTypes = {
-  id: PropTypes.number,
-  word: PropTypes.string,
-  meaning: PropTypes.string,
-  example: PropTypes.string,
+  card: PropTypes.object,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };
 
-export default function FlashCard({
-  id,
-  word,
-  meaning,
-  example,
-  onEdit,
-  onDelete,
-}) {
+export default function FlashCard({ card, onEdit, onDelete }) {
   const [flipped, setFlipped] = useState(false);
 
   return (
@@ -28,35 +18,31 @@ export default function FlashCard({
         <div className="flip-card-front">
           <Card
             className="bg-secondary text-light"
-            style={{ minHeight: 300, minWidth: 220 }}
+            style={{ minHeight: 500, width: 300 }}
           >
             <Card.Header>
-              {/* <MyTooltip id="edit" content="Edit"> */}
               <Button
                 size="sm"
                 variant="outline-light"
                 className="mx-1"
-                onClick={() => onEdit(id)}
+                onClick={() => onEdit(card.id)}
               >
                 <i className="bi bi-pencil-square"></i>
               </Button>
-              {/* </MyTooltip> */}
 
-              {/* <MyTooltip id="delete" content="Delete"> */}
               <Button
                 size="sm"
                 variant="outline-danger"
                 className="mx-1"
-                onClick={() => onDelete(id)}
+                onClick={() => onDelete(card.id)}
               >
                 <i className="bi bi-trash-fill"></i>
               </Button>
-              {/* </MyTooltip> */}
             </Card.Header>
 
-            <Card.Body className="d-flex flex-column justify-content-between align-items-center">
-              <Card.Title>{word}</Card.Title>
-              <Card.Text>{example}</Card.Text>
+            <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+              <Card.Title>{card.word}</Card.Title>
+              <Card.Text className="mt-4">{card.example}</Card.Text>
             </Card.Body>
 
             <Card.Footer>
@@ -70,35 +56,38 @@ export default function FlashCard({
         <div className="flip-card-back">
           <Card
             className="bg-body-tertiary"
-            style={{ minHeight: 300, minWidth: 220 }}
+            style={{ minHeight: 500, width: 300 }}
           >
             <Card.Header>
-              {/* <MyTooltip id="edit" content="Edit"> */}
               <Button
                 size="sm"
                 variant="outline-secondary"
                 className="mx-1"
-                onClick={() => onEdit(id)}
+                onClick={() => onEdit(card.id)}
               >
                 <i className="bi bi-pencil-square"></i>
               </Button>
-              {/* </MyTooltip> */}
 
-              {/* <MyTooltip id="delete" content="Delete"> */}
               <Button
                 size="sm"
                 variant="outline-danger"
                 className="mx-1"
-                onClick={() => onDelete(id)}
+                onClick={() => onDelete(card.id)}
               >
                 <i className="bi bi-trash-fill"></i>
               </Button>
-              {/* </MyTooltip> */}
             </Card.Header>
 
             <Card.Body className="d-flex flex-column justify-content-center">
-              <Card.Text>{meaning}</Card.Text>
+              <Card.Text>{card.meaning}</Card.Text>
             </Card.Body>
+
+            <Card.Img
+              variant="top"
+              src={card.imageUrl ?? "/image-placeholder.png"}
+              className="mx-auto mb-1"
+              style={{ width: 200, height: 200 }}
+            />
 
             <Card.Footer>
               <Button onClick={() => setFlipped(false)}>Hide</Button>
