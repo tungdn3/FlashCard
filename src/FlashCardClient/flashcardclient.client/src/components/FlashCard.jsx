@@ -84,7 +84,7 @@ export default function FlashCard({ card, onEdit, onDelete }) {
 
             <Card.Img
               variant="top"
-              src={card.imageUrl ?? "/image-placeholder.png"}
+              src={card.imageUrl || "/image-placeholder.png"}
               className="mx-auto mb-1"
               style={{ width: 200, height: 200 }}
             />

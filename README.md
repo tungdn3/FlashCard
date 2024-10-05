@@ -13,7 +13,7 @@ Deployed application:
 - [x] Flash card management: create, read, update, and delete
 - [x] Study mode: a basic carousel for users to review their flashcards
 - [x] AI-Powered enhancement: use AI to generate example sentences for vocabulary words
-- [ ] AI image suggestion
+- [x] AI image suggestion
 
 
 ## High level architecture
@@ -37,6 +37,7 @@ Deployed application:
 - API
   - EF Core: to manipulate data
   - Azure OpenAI Chat Completion service: to leverage the power of GPT models to generate example sentences. Another reason I choose Azure is because I have a Visual Studio subscription ($150)
+  - Azure OpenAI Dall-E: the same reason. Actually, I have tried DeepAI but the output is not very good. Dall-E seems very powerful
   - .Net 8
   - Sqlite
 
@@ -91,7 +92,9 @@ https://localhost:5173/
 - UI responsiveness. Currently, it is not mobile friendly
 - No paging
 - Handle session timeout more properly. Currently, it auto redirects user to the login page
-- The current prompt is not optimized. If the user has a typo, it may fail to generate examples
+- The current prompt is not optimized. Sometimes, it fails to generate example sentences or images. Especially if the user has a typo
+- After the image is generated, it may take from 15 to 30s to show the image. It is because of the large size and the storage region
+- To avoid over-use, the app disables the "AI Generate Image" button if the card already has an image
 
 ## Ideas for future improvements
 - A better UI design
@@ -99,3 +102,4 @@ https://localhost:5173/
 - Paging + sorting
 - Allow user to revert word and meaning for all cards in a deck
 - Mark learned cards, remove from learning
+- Reduce the size of the generated image and store to our Blob to improve loading time

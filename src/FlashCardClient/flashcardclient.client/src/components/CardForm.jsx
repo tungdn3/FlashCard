@@ -19,9 +19,7 @@ export default function CardForm({ cardToEdit }) {
   const [meaning, setMeaning] = useState(cardToEdit?.meaning || "");
   const [example, setExample] = useState(cardToEdit?.example || "");
   const [isExampleGenerating, setIsExampleGenerating] = useState(false);
-  const [imageUrl, setImageUrl] = useState(
-    cardToEdit?.imageUrl || "/image-placeholder.png"
-  );
+  const [imageUrl, setImageUrl] = useState(cardToEdit?.imageUrl);
   const [isImageGenerating, setIsImageGenerating] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -116,10 +114,10 @@ export default function CardForm({ cardToEdit }) {
 
         <div className="d-flex flex-column" style={{ width: 200, heigh: 200 }}>
           <Form.Control name="imageUrl" value={imageUrl} readOnly hidden />
-          <Image src={imageUrl} />
+          <Image src={imageUrl || "/image-placeholder.png"} />
           <Button
             variant="warning"
-            disabled={isImageGenerating || !word}
+            disabled={isImageGenerating || !word || imageUrl}
             onClick={handleGenerateImage}
           >
             {isImageGenerating && (
