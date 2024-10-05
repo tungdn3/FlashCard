@@ -21,5 +21,8 @@ internal class CardConfiguration : IEntityTypeConfiguration<Card>
 
         builder.Property(x => x.Example)
             .HasMaxLength(500);
+
+        builder.Property(x => x.Example)
+            .HasMaxLength(2048);
     }
 }

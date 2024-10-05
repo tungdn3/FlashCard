@@ -1,6 +1,6 @@
 ﻿using Azure.AI.OpenAI;
 using FlashCard.Core.Features.SentenceSuggestions;
-using FlashCard.Core.Interfaces;
+using FlashCard.Core.Interfaces.AIClients;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OpenAI.Chat;

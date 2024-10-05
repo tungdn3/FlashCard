@@ -45,6 +45,7 @@ public class CreateCardHandler : IRequestHandler<CreateCardRequest, int>
             Word = request.Word,
             Meaning = request.Meaning,
             Example = request.Example,
+            ImageUrl = request.ImageUrl,
         };
 
         int id = await _cardRepository.Create(card);

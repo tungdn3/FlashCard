@@ -45,6 +45,7 @@ public class UpdateCardHandler : IRequestHandler<UpdateCardRequest>
         card.Word = request.Word;
         card.Meaning = request.Meaning;
         card.Example = request.Example;
+        card.ImageUrl = request.ImageUrl;
 
         await _cardRepository.Update(card);
     }

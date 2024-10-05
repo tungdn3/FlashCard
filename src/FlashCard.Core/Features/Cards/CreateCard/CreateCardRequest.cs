@@ -13,4 +13,6 @@ public class CreateCardRequest : IRequest<int>
     public string Meaning { get; set; } = string.Empty;
 
     public string? Example { get; set; }
+
+    public string? ImageUrl { get; set; }
 }

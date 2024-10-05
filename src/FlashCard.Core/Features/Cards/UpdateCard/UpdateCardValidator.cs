@@ -22,5 +22,8 @@ public class UpdateCardValidator : AbstractValidator<UpdateCardRequest>
 
         RuleFor(x => x.Example)
             .MaximumLength(500);
+
+        RuleFor(x => x.ImageUrl)
+            .MaximumLength(2048);
     }
 }

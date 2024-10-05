@@ -1,4 +1,4 @@
-﻿using FlashCard.Core.Interfaces;
+﻿using FlashCard.Core.Interfaces.AIClients;
 using FlashCard.Core.Interfaces.Repositories;
 using FlashCard.Infrastructure.AIClients;
 using FlashCard.Infrastructure.EF;
@@ -22,6 +22,9 @@ public static class DependencyInjection
 
         services.Configure<AzureChatCompleteOptions>(configuration.GetSection(AzureChatCompleteOptions.AzureChatComplete));
         services.AddSingleton<IGenerativeAIClient, AzureChatCompleteClient>();
+
+        services.Configure<AzureDallEOptions>(configuration.GetSection(AzureDallEOptions.AzureDallE));
+        services.AddSingleton<IAIImageClient, AzureDallEClient>();
 
         return services;
     }

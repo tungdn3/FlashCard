@@ -10,6 +10,8 @@ public class Card
 
     public string? Example { get; set; }
 
+    public string? ImageUrl { get; set; }
+
     public bool IsDeleted { get; set; }
 
     public int DeckId { get; set; }
