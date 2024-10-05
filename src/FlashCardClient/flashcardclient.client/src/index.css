@@ -113,3 +113,11 @@ button:focus-visible {
 .flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
+
+.deck-item {
+  border: 1px solid #e9ecef;
+}
+
+.deck-item:hover {
+  border: 1px solid gray;
+}

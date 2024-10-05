@@ -10,7 +10,7 @@ DeckItem.propTypes = {
 
 export default function DeckItem({ id, name }) {
   return (
-    <div className="d-flex justify-content-between align-items-center">
+    <div className="d-flex justify-content-between align-items-center deck-item m-1 rounded">
       <NavLink
         to={`decks/${id}`}
         className={({ isActive, isPending }) =>
