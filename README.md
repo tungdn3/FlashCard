@@ -103,3 +103,4 @@ https://localhost:5173/
 - Allow user to revert word and meaning for all cards in a deck
 - Mark learned cards, remove from learning
 - Reduce the size of the generated image and store to our Blob to improve loading time
+- Allow users to accept or decline an AI suggestion

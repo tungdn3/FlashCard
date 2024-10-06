@@ -53,6 +53,7 @@ public static class Config
             {
                 ClientId = "flash-card-bff",
                 ClientSecrets = { new Secret("secret".Sha256()) },
+                ClientName = "AI-Powered Flash Card",
 
                 AllowedGrantTypes = GrantTypes.Code,
             
