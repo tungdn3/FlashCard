@@ -128,7 +128,7 @@ export default function Deck() {
           lg={2}
           xxl={3}
           className="g-4"
-          style={{ marginTop: "15rem", marginLeft: "1rem" }}
+          style={{ marginTop: "15rem" }}
         >
           {cards.map((card) => (
             <Col key={card.id} style={{ minHeight: 500 }}>
