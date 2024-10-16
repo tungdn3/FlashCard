@@ -16,6 +16,8 @@ Deployed application:
 - [x] AI image suggestion
 
 
+<img src="./images/flash-card-home.png" alt="Home page" style="max-width: 800px">
+
 ## High level architecture
 
 <img src="./images/flash-card-architecture.png" alt="High level architecture">
@@ -32,12 +34,12 @@ Deployed application:
   - React bootstrap: I want to have friendly UI and easy to develope the app. It turns out this is not a good choice. The Tooltip makes my UI shake. No built-in hooks for the Toast
   - React router dom V6: just want to try the taste of "loader" and "action"
 - BFF
-  - .Net 8: open source, cross-platform
+  - .Net 8: a robust framework with many advantages like cross-platform, rich libraries and tools, built-in security features, large community, integrate well with various databases, cloud services, and third-party APIs, high performance
   - YARP: to forward requests from the SPA to the API without writing code
 - API
-  - EF Core: to manipulate data
-  - Azure OpenAI Chat Completion service: to leverage the power of GPT models to generate example sentences. Another reason I choose Azure is because I have a Visual Studio subscription ($150)
-  - Azure OpenAI Dall-E: the same reason. Actually, I have tried DeepAI but the output is not very good. Dall-E seems very powerful
+  - EF Core: to manipulate data with several benefits like cros-platform, code-first approach, migrations, multiple database providers, strong community and extensive documentation
+  - Azure OpenAI Chat Completion service: backed by Microsoft and OpenAI, it benefits from extensive documentation, support. Easy to integrate
+  - Azure OpenAI Dall-E: excels in producing imaginative and detailed visuals
   - .Net 8
   - Sqlite
 
